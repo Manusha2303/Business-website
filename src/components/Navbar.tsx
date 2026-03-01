@@ -28,13 +28,7 @@ export default function Navbar({
         }
     }, [isSearchOpen]);
 
-    const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
-        e.preventDefault();
-        const element = document.getElementById(id);
-        if (element) {
-            element.scrollIntoView({ behavior: 'smooth' });
-        }
-    };
+
 
     return (
         <nav className="glass fixed top-0 w-full z-50 px-[5%] py-4 flex items-center justify-between border-b border-gray-100">
@@ -42,10 +36,7 @@ export default function Navbar({
                 <Link href="/" className="text-2xl font-bold tracking-widest uppercase text-primary font-playfair">
                     SAR<span>EE</span> ELEGANCE
                 </Link>
-                <div className="hidden md:flex items-center gap-6 text-sm font-medium uppercase tracking-wider text-foreground">
-                    <Link href="#collections" onClick={(e) => scrollToSection(e, 'collections')} className="hover:text-primary">Collections</Link>
-                    <Link href="#contact" onClick={(e) => scrollToSection(e, 'contact')} className="hover:text-primary">Contact</Link>
-                </div>
+
             </div>
 
             <div className="flex items-center gap-6 text-foreground">
@@ -87,7 +78,7 @@ export default function Navbar({
                         </span>
                     )}
                 </Link>
-                <button className="md:hidden hover:text-primary"><Menu size={22} /></button>
+
             </div>
         </nav>
     );

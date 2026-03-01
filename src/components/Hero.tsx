@@ -4,13 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 export default function Hero() {
-    const scrollToCollections = (e: React.MouseEvent<HTMLAnchorElement>) => {
-        e.preventDefault();
-        const element = document.getElementById('collections');
-        if (element) {
-            element.scrollIntoView({ behavior: 'smooth' });
-        }
-    };
+
 
     return (
         <section className="relative w-full h-[90vh] flex items-center justify-center text-center overflow-hidden">
@@ -37,15 +31,7 @@ export default function Hero() {
                     Experience the finest silk, delicate weaves, and timeless craftsmanship.
                     A journey of luxury through every saree.
                 </p>
-                <div className="flex gap-4">
-                    <Link
-                        href="#collections"
-                        onClick={scrollToCollections}
-                        className="premium-button border-none !bg-primary !text-white hover:!bg-black"
-                    >
-                        Explore Collection
-                    </Link>
-                </div>
+
             </div>
         </section>
     );
