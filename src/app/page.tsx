@@ -11,6 +11,7 @@ import { useEffect } from 'react';
 
 export default function Home() {
   const [cart, setCart] = useState<Saree[]>([]);
+  const [searchQuery, setSearchQuery] = useState('');
   const router = useRouter();
 
   useEffect(() => {
@@ -35,11 +36,16 @@ export default function Home() {
 
   return (
     <main className="min-h-screen relative">
-      <Navbar cartCount={cart.length} onCartClick={handleOrder} />
+      <Navbar
+        cartCount={cart.length}
+        onCartClick={handleOrder}
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+      />
 
       <Hero />
 
-      <ProductList onAddToCart={addToCart} />
+      <ProductList onAddToCart={addToCart} searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
 
       {/* Contact Section */}
       <section id="contact" className="section-padding bg-background text-center border-t border-primary/20">

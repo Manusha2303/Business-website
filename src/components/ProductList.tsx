@@ -3,15 +3,27 @@
 import React, { useState } from 'react';
 import ProductCard from './ProductCard';
 import { SAREES, Saree } from '@/data/sarees';
+import { Search } from 'lucide-react';
 
 const CATEGORIES = ["All", "Traditional", "Modern", "Contemporary", "Heritage", "Casual"];
 
-export default function ProductList({ onAddToCart }: { onAddToCart: (saree: Saree) => void }) {
+export default function ProductList({
+    onAddToCart,
+    searchQuery = '',
+    setSearchQuery
+}: {
+    onAddToCart: (saree: Saree) => void,
+    searchQuery?: string,
+    setSearchQuery?: (query: string) => void
+}) {
     const [activeCategory, setActiveCategory] = useState("All");
 
-    const filteredSarees = activeCategory === "All"
-        ? SAREES
-        : SAREES.filter(s => s.category === activeCategory);
+    const filteredSarees = SAREES.filter(s => {
+        const matchesCategory = activeCategory === "All" || s.category === activeCategory;
+        const matchesSearch = s.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            s.category.toLowerCase().includes(searchQuery.toLowerCase());
+        return matchesCategory && matchesSearch;
+    });
 
     return (
         <section id="collections" className="section-padding bg-background relative overflow-hidden">
@@ -24,7 +36,7 @@ export default function ProductList({ onAddToCart }: { onAddToCart: (saree: Sare
                         Curated Treasures
                     </span>
                     <h2 className="text-4xl md:text-6xl font-bold elegant-title tracking-tight mb-8">
-                        Our Exclusive Collections
+                        {searchQuery ? `Search Results for "${searchQuery}"` : 'Our Exclusive Collections'}
                     </h2>
 
                     {/* Category Filter */}
@@ -59,8 +71,21 @@ export default function ProductList({ onAddToCart }: { onAddToCart: (saree: Sare
                 </div>
 
                 {filteredSarees.length === 0 && (
-                    <div className="text-center py-20 opacity-50 italic">
-                        No sarees found in this collection...
+                    <div className="text-center py-24 bg-white/40 backdrop-blur-sm rounded-[3rem] border border-primary/5">
+                        <Search size={48} className="mx-auto text-primary/20 mb-6" />
+                        <p className="text-2xl text-foreground/40 font-playfair italic">
+                            {searchQuery
+                                ? `No sarees matching "${searchQuery}" found...`
+                                : "No sarees found in this collection..."}
+                        </p>
+                        {searchQuery && (
+                            <button
+                                onClick={() => setSearchQuery?.('')}
+                                className="mt-8 text-primary font-medium underline decoration-primary/20 underline-offset-8 hover:text-secondary transition-colors"
+                            >
+                                Browse all collections
+                            </button>
+                        )}
                     </div>
                 )}
             </div>
